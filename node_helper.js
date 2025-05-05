@@ -57,10 +57,10 @@ module.exports = NodeHelper.create({
     instances: []
   },
   urls: {
-    HSL: "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql",
-    VR: "https://api.digitransit.fi/routing/v1/routers/finland/index/graphql",
+    HSL: "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1",
+    VR: "https://api.digitransit.fi/routing/v2/finland/gtfs/v1",
     default:
-      "https://api.digitransit.fi/routing/v1/routers/waltti/index/graphql"
+      "https://api.digitransit.fi/routing/v2/waltti/gtfs/v1"
   },
 
   socketNotificationReceived: function (notification, payload) {
