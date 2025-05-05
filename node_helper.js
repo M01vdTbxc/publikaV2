@@ -382,7 +382,7 @@ module.exports = NodeHelper.create({
               platformCode: data.platformCode,
               zoneId: data.zoneId,
               locationType: data.locationType,
-              stopsLength: data.stops.length,
+              //stopsLength: data.stops.length,
               stopTimes: processStopTimeData(
                 data.stoptimesWithoutPatterns
                   .filter((stoptime) =>
@@ -396,10 +396,11 @@ module.exports = NodeHelper.create({
                   )
               ),
               alerts: [
-                ...data.alerts,
-                ...data.routes
+                ...data.alerts
+                //...data.routes
                   .map((route) => route.alerts)
                   .reduce((p, c) => [...p, ...c], []),
+                /*
                 ...data.stops
                   .map((stop) => stop.alerts)
                   .reduce((p, c) => [...p, ...c], []),
@@ -410,6 +411,7 @@ module.exports = NodeHelper.create({
                       .reduce((p, c) => [...p, ...c], [])
                   )
                   .reduce((p, c) => [...p, ...c], []),
+                */
                 ...data.stoptimesWithoutPatterns
                   .map((stoptime) => stoptime.trip.alerts)
                   .reduce((p, c) => [...p, ...c], []),
