@@ -313,11 +313,11 @@ module.exports = NodeHelper.create({
     };
   },
 
-  getStopSearch: function (url, feed, stop, resolve, reject) {
+  getStopSearch: function (url, stop, resolve, reject) {
     try {
       fetch(url, {
         method: "POST",
-        body: getStopSearchQuery(feed, stop.id),
+        body: getStopSearchQuery(stop.search, stop.id),
         headers: this.getHeaders()
       })
         .then(NodeHelper.checkFetchStatus)

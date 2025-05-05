@@ -1,7 +1,7 @@
-module.exports = (feed, code) =>
-  `{
-  ${feed === "digitraffic" ? "stations" : "stops"
-  }(feeds: ["${feed}"], name: "${code}") {
+ module.exports = (search, code) =>
+   `{
+     ${search === "station" ? "stations" : "stops"
+     }(name: "${code}") {
     gtfsId
     name
     code
