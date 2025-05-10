@@ -40,9 +40,9 @@ The `publika` module shows public transport timetables from Finland's cities
 ## Dependencies
 
 - An installation of [MagicMirror<sup>2</sup>](http://magicmirror.builders/)
+- node-fetch installed to MM base or for the publika module
 - DigiTransit (**required**, free): [https://digitransit.fi/en/developers/](https://digitransit.fi/en/developers/)
   - Used for fetching timetables and searching for stops and stations
-  - Note: For now no API key is needed, but this would change in the future (april 2023)
 
 ## Other screenshots
 - Single stop view:
@@ -100,12 +100,15 @@ All cities:
 ## Getting started
 
 1) Clone this repository under `MagicMirror/modules` folder
-2) Add the module to the modules array in the `MagicMirror/config/config.js` file:
+2) Install node-fetch `npm install node-fetch@2`
+3) Get DigiTransit API key
+4) Add the module to the modules array in the `MagicMirror/config/config.js` file:
 
 ```js
 {
   module: "publika",
   position: "top_right",
+  digiTransitApiKey: "YOUR KEY HERE",
   config: {
     feed: "HSL",
     stops: [1020453],
@@ -237,7 +240,7 @@ Route planning:
 | from | yes if `type` is `"plan"` | `string` | `undefined` | ID of the departure station. Only used for route planning | `POH` |
 | to | yes if `type` is `"plan"` | `string` | `undefined` | ID of the arrival station. Only used for route planning | `KUT` |
 | name | no | `string` | `undefined` | Name to display on the stop title, next to the stop name | `"To city center"` |
-| search | no | `string` | `"stop"` | Type of search to perform. At this moment only stop search is supported | `"stop"` |
+| search | no | `string` | `"stop"` | Type of search to perform. Search for `stop` or `station`. Note: feed needs to match to get results.  | `"stop"` |
 | minutesFrom | no | `number` | `undefined` | Only fetch services starting this amount of minutes from now | `3` |
 | stopTimesCount | no | `number` | Same as parent `stopTimesCount` if set, otherwise `5` | Amount of stops for this particular stop | `7` |
 | fullHeadsign | no | `boolean` | Same as parent `fullHeadsign` if set, otherwise `false` | Show complete headsign for this particular stop. For example: Lentoasema via Myyrmäki | `true` |
