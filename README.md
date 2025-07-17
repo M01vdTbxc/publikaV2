@@ -108,8 +108,8 @@ All cities:
 {
   module: "publika",
   position: "top_right",
-  digiTransitApiKey: "YOUR KEY HERE",
   config: {
+    digiTransitApiKey: "YOUR KEY HERE",
     feed: "HSL",
     stops: [1020453],
     stopTimesCount: 5,
