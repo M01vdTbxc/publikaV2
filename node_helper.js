@@ -396,36 +396,34 @@ module.exports = NodeHelper.create({
                   )
               ),
               alerts: [
-                ...data.alerts
-                //...data.routes
-                  .map((route) => route.alerts)
+                // 1. Stop-level alerts (directly from data.alerts)
+                ...(data.alerts || []),
+
+                // 2. Route-level alerts (from data.routes)
+                ...(data.routes || [])
+                  .map((route) => route.alerts || [])
                   .reduce((p, c) => [...p, ...c], []),
-                /*
-                ...data.stops
-                  .map((stop) => stop.alerts)
+
+                // 3. Trip-level alerts (from each scheduled stoptime)
+                ...(data.stoptimesWithoutPatterns || [])
+                  .map((stoptime) => stoptime.trip?.alerts || [])
                   .reduce((p, c) => [...p, ...c], []),
-                ...data.stops
-                  .map((stop) =>
-                    stop.routes
-                      .map((route) => route.alerts)
-                      .reduce((p, c) => [...p, ...c], [])
-                  )
-                  .reduce((p, c) => [...p, ...c], []),
-                */
-                ...data.stoptimesWithoutPatterns
-                  .map((stoptime) => stoptime.trip.alerts)
-                  .reduce((p, c) => [...p, ...c], []),
-                ...data.stoptimesWithoutPatterns
-                  .map((stoptime) => stoptime.trip.route.alerts)
+
+                // 4. Trip-Route-level alerts (redundant but often contains specific info)
+                ...(data.stoptimesWithoutPatterns || [])
+                  .map((stoptime) => stoptime.trip?.route?.alerts || [])
                   .reduce((p, c) => [...p, ...c], [])
               ]
-                .map((alert) => ({
-                  startTime: moment.unix(alert.effectiveStartDate),
-                  endTime: moment.unix(alert.effectiveEndDate),
-                  ...alert
-                }))
-                .sort((a, b) => moment(a.endTime).diff(moment(b.endTime)))
-                .sort((a, b) => moment(a.startTime).diff(moment(b.startTime)))
+              // Clean up duplicates (same alert can appear in routes and stoptimes)
+              .filter((alert, index, self) => 
+                index === self.findIndex((t) => t.id === alert.id)
+              )
+              .map((alert) => ({
+                startTime: moment.unix(alert.effectiveStartDate),
+                endTime: moment.unix(alert.effectiveEndDate),
+                ...alert
+              }))
+              .sort((a, b) => a.startTime.diff(b.startTime) || a.endTime.diff(b.endTime))
             }
           });
         })
