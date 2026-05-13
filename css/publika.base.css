@@ -1,3 +1,7 @@
+.Publika {
+  --fa-style-family: "Font Awesome 6 Free";
+}
+
 .publika-base.bar {
   overflow: hidden;
 }

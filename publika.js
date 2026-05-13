@@ -839,10 +839,14 @@ Module.register("publika", {
   getStyles: function () {
     const instance = this.getInstance();
     if (instance) {
-      if (instance.config?.theme) {
-        return [this.file(`css/${this.name}.${instance.config.theme}.css`)];
+            if (instance.config?.theme) {
+        return [
+		      this.file(`css/${this.name}.${instance.config.theme}.css`),
+        	this.file(`vendor/fontawesome/css/all.min.css`)
+	      ];
       }
-      return [];
+      return [this.file(`vendor/fontawesome/css/all.min.css`)];
+    
     }
 
     return ["font-awesome.css", this.file(`css/${this.name}.base.css`)];
